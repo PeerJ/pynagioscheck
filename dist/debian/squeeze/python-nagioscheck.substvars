@@ -1,0 +1,4 @@
+python:Versions=2.5, 2.6
+python:Provides=python2.5-nagioscheck, python2.6-nagioscheck
+python:Depends=python, python-support (>= 0.90.0)
+misc:Depends=

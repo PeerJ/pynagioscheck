@@ -1,0 +1,37 @@
+#!/usr/bin/python
+
+from nagioscheck import NagiosCheck, Status
+import datetime
+import time
+
+class SleepCheck(NagiosCheck):
+    """Dummy check.  Sleeps for a long time to test execution expiry 
+    behaviour.
+    
+    """
+    version = '0.1.1'
+
+    def __init__(self):
+        NagiosCheck.__init__(self)
+
+    def expired(self):
+        # It's not the greatest idea to open *more* files in response to 
+        # SIGTERM from the NRPE server, but you know we're just testing, 
+        # right?
+        f = open('/tmp/SleepCheck', 'w')
+        print >>f, str(datetime.datetime.now())
+        f.close()
+
+        NagiosCheck.expired(self)
+
+    def check(self, opts, args):
+        sleep_for = 30
+        try:
+            sleep_for = int(args[0])
+        except Exception:
+            pass
+        time.sleep(sleep_for)
+        raise Status('ok', '*Yawwwnnn*')
+
+if __name__ == '__main__':
+    SleepCheck().run()

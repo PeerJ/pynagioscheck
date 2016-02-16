@@ -1,0 +1,40 @@
+#!/usr/bin/python
+
+from nagioscheck import NagiosCheck, Status
+from nagioscheck import prettyprint_seconds_elapsed
+import redis
+
+class RedisCheck(NagiosCheck):
+    """A simple, real-world Redis_ service availability check.
+
+    .. _Redis: http://redis.io/
+
+    """
+    version = '0.1.1'
+
+    def __init__(self):
+        NagiosCheck.__init__(self)
+
+        self.add_option('H', 'host', 'host',
+          'Hostname or network address redis-server is listening ' \
+          'on.  Defaults to 127.0.0.1.')
+        self.add_option('p', 'port', 'port',
+          'TCP port redis-server is listening on.  Defaults to 6379.')
+
+    def check(self, opts, args):
+        host = getattr(opts, 'host') or '127.0.0.1'
+        port = int(getattr(opts, 'port') or '6379')
+        try:
+            r = redis.Redis(host, port)
+            info = r.info()
+        except redis.exceptions.RedisError, e:
+            raise Status('critical', str(e))
+        raise Status('ok', (
+          'Redis is up',
+          'Redis version %s has been up for %s' %
+            (info['redis_version'],
+             prettyprint_seconds_elapsed(info['uptime_in_seconds']))
+        ))
+
+if __name__ == '__main__':
+    RedisCheck().run()

@@ -1,0 +1,23 @@
+Source: nagioscheck
+Maintainer: Saj Goonatilleke <sg@redu.cx>
+Section: python
+Priority: optional
+Build-Depends: python-setuptools (>= 0.6b3), python-all-dev (>= 2.3.5-11), debhelper (>= 5.0.38), python-central (>= 0.5.6)
+Standards-Version: 3.7.2
+XS-Python-Version: all
+
+Package: python-nagioscheck
+Architecture: all
+Depends: ${python:Depends}
+Recommends: 
+Suggests: 
+XB-Python-Version: ${python:Versions}
+Provides: ${python:Provides}
+Description: A Python framework for Nagios plug-in developers
+ .
+ pynagioscheck is a Python framework for Nagios plug-in developers.
+ .
+ pynagioscheck strives to conform to the practices described in the 
+ Nagios Plug-in Development Guidelines and, more importantly, save 
+ valuable system administrator time.
+ .

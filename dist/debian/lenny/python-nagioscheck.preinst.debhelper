@@ -1,0 +1,21 @@
+# Automatically added by dh_pycentral
+if which pycentral >/dev/null 2>&1 && pycentral --help 2>/dev/null | grep -q '^ *version'; then
+	pycentral pkgprepare python-nagioscheck <<PYEOF
+[python-package]
+format = 1
+python-version = all
+[pycentral]
+version = 0.6.7
+[files]
+/usr/share/pyshared/nagioscheck.py=f
+/usr/share/pyshared/nagioscheck.egg-info=d
+/usr/share/pyshared/nagioscheck.egg-info/top_level.txt=f
+/usr/share/pyshared/nagioscheck.egg-info/dependency_links.txt=f
+/usr/share/pyshared/nagioscheck.egg-info/PKG-INFO=f
+/usr/share/pyshared/nagioscheck.egg-info/SOURCES.txt=f
+PYEOF
+else
+	mkdir -p /var/lib/pycentral
+	echo python-nagioscheck >> /var/lib/pycentral/delayed-pkgs
+fi
+# End automatically added section
